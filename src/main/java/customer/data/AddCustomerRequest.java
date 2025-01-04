@@ -1,14 +1,9 @@
 package customer.data;
 
-
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
-public class Customer {
-    UUID id;
+public class AddCustomerRequest {
     String name;
     String email;
-    Boolean isActive;
 }

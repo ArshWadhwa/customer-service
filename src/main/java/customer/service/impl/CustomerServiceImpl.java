@@ -1,8 +1,11 @@
 package customer.service.impl;
 
 import customer.data.*;
+import customer.service.AdditionalDetailsService;
 import customer.service.CustomerService;
+import customer.service.impl.db.AdditionalDetailsDbServiceImpl;
 import customer.service.impl.db.CustomerDbServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -14,10 +17,14 @@ public class CustomerServiceImpl implements CustomerService {
         System.out.println("CustomerServiceImpl initialized");
     }
     private final CustomerDbServiceImpl customerDbService;
+    private final AdditionalDetailsService additionalDetailsService;
 
-    public CustomerServiceImpl(CustomerDbServiceImpl customerDbService) {
+    @Autowired
+
+    public CustomerServiceImpl(CustomerDbServiceImpl customerDbService,AdditionalDetailsService additionalDetailsService) {
         this.customerDbService = customerDbService;
-    }
+       this.additionalDetailsService=additionalDetailsService;
+    }// we have to initialize them within same constructor ?? why : think and answer(GN) so that in customerServiceImpl both are injected
 
     @Override
     public String addCustomer(AddCustomerRequest addCustomerRequest) {
@@ -29,6 +36,10 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setIsActive(true);
         customerDbService.addCustomer(customer);
         return userId.toString();
+
+//        if(addCustomerRequest.getAdditionalDetails()!=null){
+//            //check this ///
+//        }
     }
 
  @Override
@@ -66,4 +77,8 @@ public class CustomerServiceImpl implements CustomerService {
 
         customerDbService.deleteCustomerByUserId(customerId);
     }
+
+
+
+
 }

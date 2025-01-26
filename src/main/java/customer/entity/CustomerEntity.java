@@ -3,6 +3,7 @@ package customer.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -21,6 +22,9 @@ public class CustomerEntity {
 
     @Column(nullable = false, name = "is_active")
     private Boolean isActive;
+
+//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+//    private List<AdditionalDetailsEntity> additionalDetails;
 
     @Column(updatable = false, name = "created_at")
     private Instant createdAt;

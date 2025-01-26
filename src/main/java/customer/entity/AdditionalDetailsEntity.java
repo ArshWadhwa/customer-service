@@ -1,5 +1,6 @@
 package customer.entity;
 
+import customer.data.Customer;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -25,6 +26,10 @@ public class AdditionalDetailsEntity {
 
     @Column(updatable = false,name = "created_at")
     private Instant createdAt;
+
+//   @ManyToOne
+//    @JoinColumn(name = "user_id", nullable = false)
+//    private Customer customer;
 
     @Column(nullable = false,name = "updated_at")
     private Instant updatedAt;

@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,6 +24,7 @@ public class CustomerController {
     private static final Logger logger = LogManager.getLogger(CustomerController.class);
 
     private final CustomerService customerService;
+    // here final is used : implements once always // for using @Autowired annotation remove the final keyword but not recommended..
 
     private final AdditionalDetailsService additionalDetailsService;
 
@@ -32,17 +34,28 @@ public class CustomerController {
         this.additionalDetailsService = additionalDetailsService;
     }
 
-    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+
     public AddCustomerResponse addCustomer(@RequestBody AddCustomerRequest addCustomerRequest) {
         if (addCustomerRequest.getEmail() == null) {
             throw new IllegalArgumentException("Email cannot be null");
         }
+
+
+
+//        List<AdditionalDetailsRequest> additionalDetails =addCustomerRequest.getAdditionalDetails();
+//        if(additionalDetails!=null){
+//
+//
+//        }
         logger.info("Add customer called with request: {}",addCustomerRequest);
         String userId = customerService.addCustomer(addCustomerRequest);
 
         AddCustomerResponse response = new AddCustomerResponse();
         response.setUserId(userId);
         return response;
+
     }
 
     @GetMapping(
@@ -54,6 +67,8 @@ public ResponseEntity<GetCustomerResponse> getCustomerResponse (@RequestParam St
         GetCustomerResponse response = new GetCustomerResponse();
         response.setCustomer(customer);
         return ResponseEntity.ok(response);
+
+
     }
 
     @PutMapping(
@@ -66,6 +81,7 @@ public ResponseEntity<GetCustomerResponse> getCustomerResponse (@RequestParam St
         System.out.println("Customer updated"+updateCustomerRequest.getUpdatedName());
         System.out.println("Customer updated"+updateCustomerRequest.getUpdatedIsActive());
         return ResponseEntity.noContent().build();// it will return 204 No Content
+
 
     }
 

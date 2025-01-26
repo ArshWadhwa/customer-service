@@ -1,5 +1,7 @@
 package customer.service;
 
+import customer.data.AdditionalDetailsRequest;
+
 public interface AdditionalDetailsService {
-    void addAdditionalDetails();
+    void addAdditionalDetails(AdditionalDetailsRequest additionalDetailsRequest);
 }

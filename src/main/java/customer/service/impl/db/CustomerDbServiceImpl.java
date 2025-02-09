@@ -1,12 +1,10 @@
 package customer.service.impl.db;
 
-import customer.controller.CustomerController;
 import customer.data.Customer;
 import customer.data.db.CustomerDbRepository;
 import customer.entity.CustomerEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.id.enhanced.CustomOptimizerDescriptor;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -46,8 +44,15 @@ public class CustomerDbServiceImpl {
                 customer.setIsActive(customerEntity.getIsActive());
 
             return customer;
+
         }
+
+
         return null;
+
+    }
+    public Optional<CustomerEntity> getCustomerEntity(UUID userId){
+        return customerDbRepository.findById(userId);
 
     }
 

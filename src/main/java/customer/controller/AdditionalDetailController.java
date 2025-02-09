@@ -5,6 +5,7 @@ import customer.service.AdditionalDetailsService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.apache.logging.log4j.LogManager;
@@ -22,13 +23,12 @@ public class AdditionalDetailController {
 
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
-     public ResponseEntity<String> addAdditionalDetail(AdditionalDetailsRequest additionalDetailsRequest){
-
+     public ResponseEntity<String> addAdditionalDetail(@RequestBody AdditionalDetailsRequest additionalDetailsRequest){
+            logger.info("Api added {}",additionalDetailsRequest);
         additionalDetailsService.addAdditionalDetails(additionalDetailsRequest);
         if(additionalDetailsRequest==null){
             return ResponseEntity.badRequest().body("Cant be null");
         }
-        additionalDetailsService.addAdditionalDetails(additionalDetailsRequest);
         logger.info("Added aa successfully");
         return ResponseEntity.ok("Added goodddd");
     }

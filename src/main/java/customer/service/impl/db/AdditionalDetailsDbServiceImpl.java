@@ -1,11 +1,17 @@
 package customer.service.impl.db;
 
+import customer.data.AdditionalDetail;
 import customer.data.AdditionalDetailsRequest;
+import customer.data.Customer;
 import customer.data.db.AdditionalDetailDbRepository;
 import customer.entity.AdditionalDetailsEntity;
+import customer.entity.CustomerEntity;
 import customer.service.AdditionalDetailsService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
+
+import java.time.Instant;
+import java.util.*;
 
 @Component
 public class AdditionalDetailsDbServiceImpl {
@@ -20,14 +26,29 @@ public class AdditionalDetailsDbServiceImpl {
 
 
     @Transactional
-    public void saveAdditionalDetails(AdditionalDetailsRequest additionalDetailsRequest) {
+    public void saveAdditionalDetails(AdditionalDetailsRequest additionalDetailsRequest, CustomerEntity customerEntity) {
+
+
 //        Optional<Customer> customer
-        AdditionalDetailsEntity additionalDetailsEntity = new AdditionalDetailsEntity();
+        List<AdditionalDetailsEntity> additionalDetailsEntities=new ArrayList<>();
 
 
-        additionalDetailsEntity.setAttributeValue(additionalDetailsRequest.getAttributeValue());
-        additionalDetailsEntity.setAttribute_key(additionalDetailsRequest.getAttributeKey());
+        additionalDetailsRequest.getAdditionalDetails().forEach(item ->{
+            AdditionalDetailsEntity additionalDetails = new AdditionalDetailsEntity();
+            additionalDetails.setAttributeKey(item.getAttributeKey());
+            additionalDetails.setAttributeValue(item.getAttributeValue());
+            additionalDetails.setEncrypted(true);
+           additionalDetails.setUserId(customerEntity.getId());
+            additionalDetails.setUpdatedAt(Instant.now());
+            additionalDetails.setCreatedAt(Instant.now());
+          additionalDetailsEntities.add(additionalDetails);
+        });
 
-    additionalDetailDbRepository.save(additionalDetailsEntity);
+
+//        additionalDetailsEntity.setAttributeValue(additionalDetailsRequest);
+//        additionalDetailsEntity.setAttribute_key(additionalDetailsRequest.getAttributeKey());
+
+
+    additionalDetailDbRepository.saveAll(additionalDetailsEntities);
 }
 }

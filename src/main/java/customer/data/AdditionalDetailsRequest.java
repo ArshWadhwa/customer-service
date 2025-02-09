@@ -7,8 +7,6 @@ import java.util.UUID;
 @Data
 public class AdditionalDetailsRequest {
     private UUID userId;
-    private String attributeKey;
-    private String attributeValue;
-
-//    Boolean isEncrypted;
+    private boolean isEncrypted;
+    List<AdditionalDetail> additionalDetails;
 }

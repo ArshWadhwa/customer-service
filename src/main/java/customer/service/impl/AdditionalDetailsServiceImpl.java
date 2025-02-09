@@ -31,8 +31,15 @@ public class AdditionalDetailsServiceImpl implements AdditionalDetailsService{
     @Override
     @Transactional
     public void addAdditionalDetails(AdditionalDetailsRequest additionalDetailsRequest){
-        Customer customer=customerDbService.GetCustomerByUserId(additionalDetailsRequest.getUserId());
-        additionalDetailsDbService.saveAdditionalDetails(additionalDetailsRequest);
+        Optional<CustomerEntity> customerEntity=customerDbService.getCustomerEntity(additionalDetailsRequest.getUserId());
+        if(customerEntity.isPresent()){
+            additionalDetailsDbService.saveAdditionalDetails(additionalDetailsRequest,customerEntity.get());
+
+
+        }
+
+
+
     }
 
 

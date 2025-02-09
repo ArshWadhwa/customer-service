@@ -10,5 +10,5 @@ public class AddCustomerRequest {
     String email;
     Boolean isActive;
 //
-     List<AdditionalDetailsRequest> additionalDetails;
+
 }

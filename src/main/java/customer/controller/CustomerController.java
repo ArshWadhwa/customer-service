@@ -19,6 +19,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin("http://127.0.0.1:5501/")
 @RequestMapping("/v1/customer")
 public class CustomerController {
     private static final Logger logger = LogManager.getLogger(CustomerController.class);

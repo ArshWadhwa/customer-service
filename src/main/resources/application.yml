@@ -4,5 +4,13 @@ spring:
     username: postgres
     password: postgres
 
+  jpa:
+    hibernate:
+      ddl-auto: update  # Prevents table from being dropped
+    show-sql: true      # Optional: Logs SQL queries for debugging
+    properties:
+      hibernate:
+        format_sql: true  # Formats SQL output in logs
+
 server:
   port: 8080

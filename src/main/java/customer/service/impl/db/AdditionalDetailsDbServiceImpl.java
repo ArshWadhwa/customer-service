@@ -3,10 +3,12 @@ package customer.service.impl.db;
 import customer.data.AdditionalDetail;
 import customer.data.AdditionalDetailsRequest;
 import customer.data.Customer;
+import customer.data.UpdateAdditionalDetailsRequest;
 import customer.data.db.AdditionalDetailDbRepository;
 import customer.entity.AdditionalDetailsEntity;
 import customer.entity.CustomerEntity;
 import customer.service.AdditionalDetailsService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
@@ -51,4 +53,22 @@ public class AdditionalDetailsDbServiceImpl {
 
     additionalDetailDbRepository.saveAll(additionalDetailsEntities);
 }
+@Transactional
+public void updateAdditionalDetails(UpdateAdditionalDetailsRequest updateAdditionalDetailsRequest){
+    List<AdditionalDetailsEntity> optionalDetail = additionalDetailDbRepository.findByUserId(updateAdditionalDetailsRequest.getUserId());
+
+if(optionalDetail.isEmpty()) {
+    throw new EntityNotFoundException("No additionalDetails found" + updateAdditionalDetailsRequest.getUserId());
+
+}
+    for (AdditionalDetailsEntity detail :optionalDetail) {
+        detail.setAttributeKey(updateAdditionalDetailsRequest.getUpdatedAttributeKey());
+        detail.setAttributeValue(updateAdditionalDetailsRequest.getUpdatedAttributeValue());
+        detail.setUpdatedAt(Instant.now());
+    }
+    additionalDetailDbRepository.saveAll(optionalDetail);
+
+
+}
+
 }

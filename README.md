@@ -195,12 +195,4 @@ A customer cannot have two additional details with the same key (`user_id + attr
 - Fork, clone, and create a PR!
 - For any issues, open a GitHub issue.
 
----
 
-## **License**
-
-MIT
-
----
-
-**If you need more details or want to add more features (like authentication), see the code comments or open an issue!**

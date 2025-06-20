@@ -1,13 +1,13 @@
 package customer.controller;
 
 import customer.data.AdditionalDetailsRequest;
+import customer.data.UpdateAdditionalDetailsRequest;
 import customer.service.AdditionalDetailsService;
+import jakarta.validation.Valid;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 @RestController
@@ -31,5 +31,17 @@ public class AdditionalDetailController {
         }
         logger.info("Added aa successfully");
         return ResponseEntity.ok("Added goodddd");
+    }
+
+
+    @PutMapping(
+            path = "/update",
+            produces = {MediaType.APPLICATION_JSON_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    public ResponseEntity<Void> updateAdditionalDetails(@Valid @RequestBody UpdateAdditionalDetailsRequest updateAdditionalDetailsRequest){
+        additionalDetailsService.updateAdditionalDetails(updateAdditionalDetailsRequest);
+
+        return ResponseEntity.noContent().build();
     }
 }

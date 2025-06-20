@@ -53,22 +53,19 @@ public class AdditionalDetailsDbServiceImpl {
 
     additionalDetailDbRepository.saveAll(additionalDetailsEntities);
 }
+
+
 @Transactional
-public void updateAdditionalDetails(UpdateAdditionalDetailsRequest updateAdditionalDetailsRequest){
-    List<AdditionalDetailsEntity> optionalDetail = additionalDetailDbRepository.findByUserId(updateAdditionalDetailsRequest.getUserId());
-
-if(optionalDetail.isEmpty()) {
-    throw new EntityNotFoundException("No additionalDetails found" + updateAdditionalDetailsRequest.getUserId());
-
-}
-    for (AdditionalDetailsEntity detail :optionalDetail) {
-        detail.setAttributeKey(updateAdditionalDetailsRequest.getUpdatedAttributeKey());
-        detail.setAttributeValue(updateAdditionalDetailsRequest.getUpdatedAttributeValue());
-        detail.setUpdatedAt(Instant.now());
-    }
-    additionalDetailDbRepository.saveAll(optionalDetail);
+public void updateAdditionalDetails(UpdateAdditionalDetailsRequest request){
+    AdditionalDetailsEntity detail = additionalDetailDbRepository
+    .findByUserIdAndAttributeKey(request.getUserId(),request.getAttributeKey())
+    .orElseThrow(()-> new EntityNotFoundException("No additional detail found for id: " + request.getUserId()+ " and key: " + request.getAttributeKey()));
 
 
+   
+    detail.setAttributeValue(request.getUpdatedAttributeValue());
+    detail.setUpdatedAt(Instant.now());
+    additionalDetailDbRepository.save(detail);
 }
 
 }

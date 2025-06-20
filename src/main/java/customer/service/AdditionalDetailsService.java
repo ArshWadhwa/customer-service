@@ -5,5 +5,5 @@ import customer.data.UpdateAdditionalDetailsRequest;
 
 public interface AdditionalDetailsService {
     void addAdditionalDetails(AdditionalDetailsRequest additionalDetailsRequest);
-//     void updateAdditionalDetails(UpdateAdditionalDetailsRequest updateAdditionalDetailsRequest);
+      void updateAdditionalDetails(UpdateAdditionalDetailsRequest updateAdditionalDetailsRequest);
 }

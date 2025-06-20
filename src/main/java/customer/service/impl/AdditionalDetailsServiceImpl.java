@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class AdditionalDetailsServiceImpl implements AdditionalDetailsService{
+public class AdditionalDetailsServiceImpl implements AdditionalDetailsService {
 
 
     private final AdditionalDetailsDbServiceImpl additionalDetailsDbService;
@@ -32,20 +32,21 @@ public class AdditionalDetailsServiceImpl implements AdditionalDetailsService{
 
     @Override
     @Transactional
-    public void addAdditionalDetails(AdditionalDetailsRequest additionalDetailsRequest){
-        Optional<CustomerEntity> customerEntity=customerDbService.getCustomerEntity(additionalDetailsRequest.getUserId());
-        if(customerEntity.isPresent()){
-            additionalDetailsDbService.saveAdditionalDetails(additionalDetailsRequest,customerEntity.get());
+    public void addAdditionalDetails(AdditionalDetailsRequest additionalDetailsRequest) {
+        Optional<CustomerEntity> customerEntity = customerDbService.getCustomerEntity(additionalDetailsRequest.getUserId());
+        if (customerEntity.isPresent()) {
+            additionalDetailsDbService.saveAdditionalDetails(additionalDetailsRequest, customerEntity.get());
         }
     }
-    public void updateAdditionalDetail(UpdateAdditionalDetailsRequest updateAdditionalDetailsRequest){
-    Optional<CustomerEntity> customerEntity= customerDbService.getCustomerEntity(updateAdditionalDetailsRequest.getUserId());
-if(customerEntity.isEmpty()){
-    throw new EntityNotFoundException("customer not found: "+ updateAdditionalDetailsRequest.getUserId());
+    @Override
+    @Transactional
+    public void updateAdditionalDetails(UpdateAdditionalDetailsRequest updateAdditionalDetailsRequest) {
+        Optional<CustomerEntity> customerEntity = customerDbService.getCustomerEntity(updateAdditionalDetailsRequest.getUserId());
+        if (customerEntity.isEmpty()) {
+            throw new EntityNotFoundException("customer not found: " + updateAdditionalDetailsRequest.getUserId());
 
-}
-additionalDetailsDbService.updateAdditionalDetails(updateAdditionalDetailsRequest);
+        }
+        additionalDetailsDbService.updateAdditionalDetails(updateAdditionalDetailsRequest);
 //   }
-  }
-
+    }
 }

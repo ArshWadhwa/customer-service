@@ -8,3 +8,6 @@ created_at TIMESTAMP default current_timestamp,
 updated_at TIMESTAMP default current_timestamp,
 
 );
+
+ALTER TABLE additional_details
+ADD CONSTRAINT unique_user_key UNIQUE (user_id, attribute_key);
